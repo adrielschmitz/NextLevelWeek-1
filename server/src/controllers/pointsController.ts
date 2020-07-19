@@ -2,6 +2,12 @@ import { Request, Response } from 'express'
 import knex from '../database/connection'
 
 const PointsController = () => {
+  const findById = async (id: string) => (
+    knex('points')
+      .where('id', id)
+      .first()
+  )
+  
   const index = async (request: Request, response: Response) => {
     const { city, uf, items } = request.query
 
@@ -19,8 +25,6 @@ const PointsController = () => {
 
     return response.json(points)
   }
-
-  const findById = async (id: string) => knex('points').where('id', id).first()
 
   const show = async (request: Request, response: Response) => {
     const { id } = request.params
@@ -92,10 +96,10 @@ const PointsController = () => {
   }
 
   return {
-    createPoint: create,
-    showPoint: show,
-    indexPoint: index,
-    deletePoint: destroy,
+    index,
+    create,
+    show,
+    destroy,
   }
 }
 

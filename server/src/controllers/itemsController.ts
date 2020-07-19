@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import knex from '../database/connection'
 
-const default_url = 'http://localhost:3333/uploads/'
+const default_url = 'http://192.168.31.84:3333/uploads/'
 
 const ItemsController = () => {
   return async (request: Request, response: Response) => {
