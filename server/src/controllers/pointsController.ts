@@ -4,6 +4,7 @@ import knex from '../database/connection'
 const PointsController = () => {
   const index = async (request: Request, response: Response) => {
     const { city, uf, items } = request.query
+
     const parsed_items = String(items)
       .split(',')
       .map(item => Number(item.trim()))
@@ -19,10 +20,11 @@ const PointsController = () => {
     return response.json(points)
   }
 
+  const findById = async (id: string) => knex('points').where('id', id).first()
+
   const show = async (request: Request, response: Response) => {
     const { id } = request.params
-
-    const point = await knex('points').where('id', id).first()
+    const point = await findById(id)
 
     if (!point) {
       return response.status(400).json({ message: 'Point not found' })
@@ -80,7 +82,21 @@ const PointsController = () => {
     return response.json({ id: point_id, ...point })
   }
 
-  return { createPoint: create, showPoint: show, indexPoint: index }
+  const destroy = async (request: Request, response: Response) => {
+    const { id } = request.params
+    const point = await findById(id)
+
+    console.log(point)
+
+    return response.json({ status: 200 })
+  }
+
+  return {
+    createPoint: create,
+    showPoint: show,
+    indexPoint: index,
+    deletePoint: destroy,
+  }
 }
 
 export default PointsController

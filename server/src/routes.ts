@@ -6,7 +6,7 @@ import ItemsController from './controllers/itemsController'
 const routes = express.Router()
 
 const IndexItemsController = ItemsController()
-const { createPoint, showPoint, indexPoint } = PointsController()
+const { createPoint, showPoint, indexPoint, deletePoint } = PointsController()
 
 // ITEMS
 routes.get('/items', IndexItemsController)
@@ -15,5 +15,6 @@ routes.get('/items', IndexItemsController)
 routes.get('/points', indexPoint)
 routes.get('/points/:id', showPoint)
 routes.post('/points', createPoint)
+routes.delete('/points/:id', deletePoint)
 
 export default routes
